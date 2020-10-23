@@ -70,7 +70,7 @@ class stockController {
       (err: any, repartidor: { insertId: any; }, fields: any) => {
         if (!err) {
           //res.json({ message: 'repartidor Saved' });
-          res
+          res 
             .status(201)
             .send(`repartidor added with ID: ${repartidor.insertId}`);
           res.json(repartidor);
