@@ -10,7 +10,7 @@ const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 const ordenesRoutes_1 = __importDefault(require("./routes/ordenesRoutes"));
 const localesRoutes_1 = __importDefault(require("./routes/localesRoutes"));
 const repartidoresRoutes_1 = __importDefault(require("./routes/repartidoresRoutes"));
-const repartidoresRoutes_2 = __importDefault(require("./routes/repartidoresRoutes"));
+const stockRoutes_1 = __importDefault(require("./routes/stockRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -29,7 +29,7 @@ class Server {
         this.app.use('/api/ordenes', ordenesRoutes_1.default);
         this.app.use('/api/locales', localesRoutes_1.default);
         this.app.use('/api/repartidores', repartidoresRoutes_1.default);
-        this.app.use('/api/stock', repartidoresRoutes_2.default);
+        this.app.use('/api/stock', stockRoutes_1.default);
         //this.app.use('/api/personas',personasRoutes);
     }
     start() {

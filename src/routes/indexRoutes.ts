@@ -11,6 +11,8 @@ class IndexRoutes {
 
     config() : void {
         this.router.get('/', indexcontroller.index);
+        this.router.get('/carlos', indexcontroller.carlos);
+        this.router.get('/api', indexcontroller.api);
     }
 
 }

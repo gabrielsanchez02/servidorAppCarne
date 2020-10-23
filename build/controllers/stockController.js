@@ -8,79 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const database_1 = __importDefault(require("../database"));
+//import database from "../database";
+var database = require('../database');
 class stockController {
-    lista(req, res) {
+    listado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield database_1.default.query("SELECT * FROM stock", (err, stock, fields) => {
-                    if (!err) {
-                        res.json(stock);
+            // async connection to database
+            database.then(function (connection) {
+                //console.log("entro a stock listado desp database");
+                connection.query(" SELECT stock.idprod, stock.nombre, categoria.nombre, stock.valor_referencia, subcategoria.nombre, stock.Unid, stock.unidades FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>0))", function (error, results, fields) {
+                    if (error) {
+                        console.log(error);
+                        return;
                     }
-                    else {
-                        +console.log(err);
-                    }
+                    // console.log("enviando respuesta" +results);
+                    res.send(results);
                 });
-            }
-            catch (error) {
-                console.log(error);
-                //res.status(error.response.status)
-                /*
-                      
-                      SELECT stock.idprod, stock.nombre, categoria.nombre, stock.valor_referencia, subcategoria.nombre, stock.Unid, stock.unidades
-                          FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat
-                          WHERE (((stock.unidades)>0));
-                      
-                      */
-            }
-        });
-    }
-    getOne(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            yield database_1.default.query("SELECT * FROM t_repartidor WHERE ID_repartidor = ? ", [id], (err, repartidor, fields) => {
-                if (!err) {
-                    res.json(repartidor[0]);
-                }
-                else {
-                    console.log(err);
-                }
             });
-        });
-    }
-    create(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query("INSERT INTO ID_repartidor SET ?", req.body, (err, repartidor, fields) => {
-                if (!err) {
-                    //res.json({ message: 'repartidor Saved' });
-                    res
-                        .status(201)
-                        .send(`repartidor added with ID: ${repartidor.insertId}`);
-                    res.json(repartidor);
-                }
-                else {
-                    console.log(err);
-                }
-            });
-        });
-    }
-    update(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            const oldrepartidor = req.body;
-            yield database_1.default.query("UPDATE t_repartidor set ? WHERE id = ?", [req.body, id]);
-            res.json({ message: "The repartidor was Updated" });
-        });
-    }
-    delete(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
-            yield database_1.default.query("DELETE FROM t_repartidor WHERE id = ?", [id]);
-            res.json({ message: "The game was deleted" });
         });
     }
 }

@@ -5,7 +5,7 @@ import indexRoutes from './routes/indexRoutes';
 import ordenesRoutes from './routes/ordenesRoutes';
 import localesRoutes from './routes/localesRoutes';
 import repartidoresRoutes from './routes/repartidoresRoutes';
-import stockRoutes from './routes/repartidoresRoutes';
+import stockRoutes from './routes/stockRoutes';
 
 class Server{
     public app:Application;
@@ -27,7 +27,8 @@ class Server{
         this.app.use('/api/locales',localesRoutes);
         this.app.use('/api/repartidores',repartidoresRoutes);
         this.app.use('/api/stock',stockRoutes);
-        
+
+    
 
         //this.app.use('/api/personas',personasRoutes);
     }

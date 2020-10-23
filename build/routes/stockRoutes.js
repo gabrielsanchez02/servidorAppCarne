@@ -11,11 +11,11 @@ class stockRoutes {
         this.config();
     }
     config() {
-        this.router.get('/', stockController_1.default.lista);
-        this.router.get('/:id', stockController_1.default.getOne);
-        this.router.post('/', stockController_1.default.create);
-        this.router.put('/:id', stockController_1.default.update);
-        this.router.delete('/:id', stockController_1.default.delete);
+        this.router.get('/', stockController_1.default.listado);
+        /* this.router.get('/:id', stockController.getOne);
+         this.router.post('/', stockController.create);
+         this.router.put('/:id', stockController.update);
+         this.router.delete('/:id', stockController.delete);*/
     }
 }
 exports.default = new stockRoutes().router;

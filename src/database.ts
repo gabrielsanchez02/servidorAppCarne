@@ -1,6 +1,8 @@
 //import mysql1 from 'mysql';
 //import keys from './keys';
 
+import { createConnection } from "mongoose";
+
 
 /*
 
@@ -38,14 +40,25 @@ const mysql = require('mysql2');
 const { Client } = require('ssh2');
 const sshClient = new Client();
 
+var sshConf = {
+  host: 'vps-1869856-x.dattaweb.com',
+  port: 5997,
+  username: 'root',
+  password: 'bfCzAW3UFwYv',
+};
+
+var sqlConf = {
+    host: 'vps-1869856-x.dattaweb.com',
+    user: 'appcarne',
+    password: 'D*4eF3o4hW',
+    database: 'appcarne_app',
+    port: 3306
+};
+
 const dbServer = {
-    connectionLimit : 1000,
-    connectTimeout  : 60 * 60 * 1000,
-    acquireTimeout  : 60 * 60 * 1000,
-    timeout         : 60 * 60 * 1000,
     host: 'vps-1869856-x.dattaweb.com:2095',
     user: 'root',
-    password: 'D*4eF3o4hW',
+    password: 'bfCzAW3UFwYv',
     database: 'appcarne_app',
     port: 3306
 }
@@ -61,11 +74,12 @@ const tunnelConfig = {
 const forwardConfig = { 
     srcHost: '127.0.0.1', // cualquier dirección válida 
     srcPort: 3306, // cualquier puerto válido 
-    dstHost: dbServer.host, // base de datos de destino 
-    dstPort: dbServer.port // puerto de destino 
+    dstHost: sqlConf.host, // base de datos de destino 
+    dstPort: sqlConf.port // puerto de destino 
 };
 
-const SSHConnection = new Promise((resolve, reject) => {
+const database = new Promise((resolve, reject) => {
+    var pool ;
     sshClient.on('ready', () => {
         sshClient.forwardOut(
         forwardConfig.srcHost,
@@ -75,7 +89,7 @@ const SSHConnection = new Promise((resolve, reject) => {
         (err: any, stream: any) => {
              if (err) reject(err);
              const updatedDbServer = {
-                 ...dbServer,
+                 ...sqlConf,
                  stream
             };
             const connection =  mysql.createConnection(updatedDbServer);
@@ -83,14 +97,70 @@ const SSHConnection = new Promise((resolve, reject) => {
             if (error) {
                 reject(error);
             }
+            console.log('Base de datos: '+ updatedDbServer.database+' is connected ');
+           // pool = connection.createPool(updatedDbServer);
+
             resolve(connection);
+            
             });
         });
-    }).connect(tunnelConfig);
+    }).connect(sshConf);
+    
 });
- 
 
-export default SSHConnection;
+
+
+module.exports = database;
+
+/*
+
+var http = require("http");
+var mysql2 = require('mysql2');
+var SSH2Client = require('ssh2').Client;
+
+var sshConf = {
+  host: 'vps-1869856-x.dattaweb.com',
+  port: 5997,
+  username: 'root',
+  password: 'bfCzAW3UFwYv',
+};
+
+var sqlConf = {
+    host: 'vps-1869856-x.dattaweb.com',
+    user: 'appcarne',
+    password: 'D*4eF3o4hW',
+    database: 'appcarne_app',
+    port: 3306
+};
+
+var ssh = new SSH2Client();
+ssh.on('ready', function() {
+  ssh.forwardOut(
+    // source IP the connection would have came from. this can be anything since we
+    // are connecting in-process
+    '127.0.0.1',
+    // source port. again this can be randomized and technically should be unique
+    24000,
+    // destination IP on the remote server
+    '127.0.0.1',
+    // destination port at the destination IP
+    3306,
+    function(err: any, stream: any) {
+      // you will probably want to handle this better,
+      // in case the tunnel couldn't be created due to server restrictions
+      if (err) throw err;
+
+      // if you use `sqlConf` elsewhere, be aware that the following will
+      // mutate that object by adding the stream object for simplification purposes
+    //  sqlConf.stream = stream;
+      var db = mysql2.createConnection(sqlConf);
+
+      // now use `db` to make your queries
+    }
+  );
+});
+ssh.connect(sshConf);
+
 
 /*
 var mysql = require('mysql');

@@ -4,8 +4,11 @@ class Indexcontroller {
     index(req, res) {
         res.send('hello');
     }
-    carlor(req, res) {
-        res.send('hello');
+    carlos(req, res) {
+        res.send('carlos esta aqui');
+    }
+    api(req, res) {
+        res.send('entro');
     }
 }
 exports.indexcontroller = new Indexcontroller();
