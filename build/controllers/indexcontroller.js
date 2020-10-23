@@ -4,5 +4,8 @@ class Indexcontroller {
     index(req, res) {
         res.send('hello');
     }
+    carlor(req, res) {
+        res.send('hello');
+    }
 }
 exports.indexcontroller = new Indexcontroller();

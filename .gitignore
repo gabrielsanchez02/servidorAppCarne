@@ -1,3 +1,6 @@
 node_modules
-.idea
 .vscode
+.idea/modules.xml
+.idea/server.iml
+.idea/workspace.xml
+.idea/codeStyles/Project.xml

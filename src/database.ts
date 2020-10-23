@@ -1,5 +1,5 @@
-import mysql1 from 'mysql';
-import keys from './keys';
+//import mysql1 from 'mysql';
+//import keys from './keys';
 
 
 /*
@@ -43,11 +43,11 @@ const dbServer = {
     connectTimeout  : 60 * 60 * 1000,
     acquireTimeout  : 60 * 60 * 1000,
     timeout         : 60 * 60 * 1000,
-    host: 'https://vps-1869856-x.dattaweb.com:2095/extra_soft/phpMyAdmin',
+    host: 'vps-1869856-x.dattaweb.com:2095',
     user: 'root',
-    password: 'bfCzAW3UFwYv',
+    password: 'D*4eF3o4hW',
     database: 'appcarne_app',
-    port: 5997
+    port: 3306
 }
 
 
@@ -58,11 +58,11 @@ const tunnelConfig = {
     password: process.env.DB_SSH_PASSWORD
 }
 
-const forwardConfig = {
-    srcHost: '127.0.0.1',
-    srcPort: 3306,
-    dstHost: dbServer.host,
-    dstPort: dbServer.port
+const forwardConfig = { 
+    srcHost: '127.0.0.1', // cualquier dirección válida 
+    srcPort: 3306, // cualquier puerto válido 
+    dstHost: dbServer.host, // base de datos de destino 
+    dstPort: dbServer.port // puerto de destino 
 };
 
 const SSHConnection = new Promise((resolve, reject) => {

@@ -75,4 +75,3 @@ class stockController {
 
 const StockController = new stockController();
 export default StockController;
-

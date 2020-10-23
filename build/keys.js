@@ -2,12 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     database: {
-        connectionLimit: 1000,
-        connectTimeout: 60 * 60 * 1000,
-        acquireTimeout: 60 * 60 * 1000,
-        timeout: 60 * 60 * 1000,
         host: 'vps-1869856-x.dattaweb.com',
-        user: 'appcarne',
+        user: 'root',
         password: 'bfCzAW3UFwYv',
         database: 'appcarne_app',
     }

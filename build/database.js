@@ -1,4 +1,6 @@
 "use strict";
+//import mysql1 from 'mysql';
+//import keys from './keys';
 Object.defineProperty(exports, "__esModule", { value: true });
 /*
 
@@ -37,11 +39,11 @@ const dbServer = {
     connectTimeout: 60 * 60 * 1000,
     acquireTimeout: 60 * 60 * 1000,
     timeout: 60 * 60 * 1000,
-    host: 'https://vps-1869856-x.dattaweb.com:2095/extra_soft/phpMyAdmin',
+    host: 'vps-1869856-x.dattaweb.com:2095',
     user: 'root',
-    password: 'bfCzAW3UFwYv',
+    password: 'D*4eF3o4hW',
     database: 'appcarne_app',
-    port: 5997
+    port: 3306
 };
 const tunnelConfig = {
     host: process.env.DB_SSH_HOST,
@@ -53,7 +55,7 @@ const forwardConfig = {
     srcHost: '127.0.0.1',
     srcPort: 3306,
     dstHost: dbServer.host,
-    dstPort: dbServer.port
+    dstPort: dbServer.port // puerto de destino 
 };
 const SSHConnection = new Promise((resolve, reject) => {
     sshClient.on('ready', () => {
