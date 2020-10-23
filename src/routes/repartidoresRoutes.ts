@@ -11,11 +11,11 @@ class RepartidoresRoutes {
     }
 
     config() {
-        this.router.get('/', repartidoresController.lista);
-        this.router.get('/:id', repartidoresController.getOne);
-        this.router.post('/', repartidoresController.create);
-        this.router.put('/:id', repartidoresController.update);
-        this.router.delete('/:id', repartidoresController.delete);
+      //  this.router.get('/', repartidoresController.lista);
+      //  this.router.get('/:id', repartidoresController.getOne);
+      //  this.router.post('/', repartidoresController.create);
+      //  this.router.put('/:id', repartidoresController.update);
+      //  this.router.delete('/:id', repartidoresController.delete);
     }
 
 }

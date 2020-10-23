@@ -1,11 +1,10 @@
-
-
 import { Request, Response } from 'express';
-import pool from '../database';
+
+var database = require('../database');
 
 
 class LocalesController {
-
+/*
     public async lista(req: Request, res: Response): Promise<void> {      
         try{
             await pool.query('SELECT * FROM t_local', (err , locales , fields) => {
@@ -57,7 +56,7 @@ class LocalesController {
         const { id } = req.params;
         await pool.query('DELETE FROM t_local WHERE id = ?', [id]);
         res.json({ message: "The game was deleted" });
-    }
+    }*/
 }
 
 const localesController = new LocalesController;

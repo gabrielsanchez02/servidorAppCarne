@@ -11,11 +11,11 @@ class LocalesRoutes {
     }
 
     config() {
-        this.router.get('/', localesController.lista);
-        this.router.get('/:id', localesController.getOne);
-        this.router.post('/', localesController.create);
-        this.router.put('/:id', localesController.update);
-        this.router.delete('/:id', localesController.delete);
+        //this.router.get('/', localesController.lista);
+        //this.router.get('/:id', localesController.getOne);
+        //this.router.post('/', localesController.create);
+        //this.router.put('/:id', localesController.update);
+        //this.router.delete('/:id', localesController.delete);
     }
 
 }

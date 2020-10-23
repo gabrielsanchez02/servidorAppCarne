@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const ordenesRoutes_1 = __importDefault(require("./routes/ordenesRoutes"));
+const categoriasRoutes_1 = __importDefault(require("./routes/categoriasRoutes"));
 const localesRoutes_1 = __importDefault(require("./routes/localesRoutes"));
 const repartidoresRoutes_1 = __importDefault(require("./routes/repartidoresRoutes"));
 const stockRoutes_1 = __importDefault(require("./routes/stockRoutes"));
@@ -26,7 +26,7 @@ class Server {
     }
     routes() {
         this.app.use('/', indexRoutes_1.default);
-        this.app.use('/api/ordenes', ordenesRoutes_1.default);
+        this.app.use('/api/categorias', categoriasRoutes_1.default);
         this.app.use('/api/locales', localesRoutes_1.default);
         this.app.use('/api/repartidores', repartidoresRoutes_1.default);
         this.app.use('/api/stock', stockRoutes_1.default);

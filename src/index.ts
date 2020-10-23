@@ -2,7 +2,7 @@ import express, {Application} from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
-import ordenesRoutes from './routes/ordenesRoutes';
+import categoriasRoutes from './routes/categoriasRoutes';
 import localesRoutes from './routes/localesRoutes';
 import repartidoresRoutes from './routes/repartidoresRoutes';
 import stockRoutes from './routes/stockRoutes';
@@ -23,7 +23,7 @@ class Server{
     }
     routes():void{
         this.app.use('/',indexRoutes);
-        this.app.use('/api/ordenes',ordenesRoutes);
+        this.app.use('/api/categorias',categoriasRoutes);
         this.app.use('/api/locales',localesRoutes);
         this.app.use('/api/repartidores',repartidoresRoutes);
         this.app.use('/api/stock',stockRoutes);

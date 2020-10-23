@@ -1,25 +1,28 @@
 import { Request, Response } from 'express';
 
 
-import pool from '../database';
+var database = require('../database');
 
-class OrdenesController {
+class categoriaController {
 
-    public async lista(req: Request, res: Response): Promise<void> {      
-        try{
-            await pool.query('SELECT * FROM t_orden', (err , ordenes , fields) => {
-                if(!err){
-                    res.json(ordenes)
-                }else {
-                    console.log(err)
+    public async listado(req: Request, res: Response): Promise<void> {
+        // async connection to database
+     
+        database.then(function(connection: { query: (arg0: string, arg1: (error: any, results: any, fields: any) => void) => void; }){
+       
+            //console.log("entro a stock listado desp database");
+            connection.query("SELECT * FROM categoria", function(error: any, results: any, fields: any) {
+                if (error) {
+                    console.log(error);
+                    return;
                 }
-            }); 
-          }  catch (error){
-            console.log(error)
-            //res.status(error.response.status)
-        };
+               // console.log("enviando respuesta" +results);
+                res.send(results);
+            });
+        });
+    
     }
-
+/*
     public async getOne(req: Request, res: Response): Promise<any> {
         const { id } = req.params;
         await pool.query('SELECT * FROM t_orden WHERE ID_ord = ? ', [id], (err, ordenes, fields)=>{
@@ -48,8 +51,8 @@ class OrdenesController {
         const { id } = req.params;
         await pool.query('DELETE FROM t_orden WHERE id = ?', [id]);
         res.json({ message: "The game was deleted" });
-    }
+    }*/
 }
 
-const ordenesController = new OrdenesController;
-export default ordenesController;
+const CategoriaController = new categoriaController;
+export default CategoriaController;
