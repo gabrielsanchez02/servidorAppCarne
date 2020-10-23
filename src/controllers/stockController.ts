@@ -19,7 +19,7 @@ class stockController {
                 return;
             }
            // console.log("enviando respuesta" +results);
-            res.send(results);
+            res.json({"error": false ,results});
         });
     });
 
