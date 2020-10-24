@@ -20,7 +20,6 @@ class categoriaController {
                res.json({"error": false ,results});
             });
         });
-    
     }
 /*
     public async getOne(req: Request, res: Response): Promise<any> {

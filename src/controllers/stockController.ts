@@ -16,6 +16,7 @@ class stockController {
         connection.query(" SELECT stock.idprod, stock.nombre, categoria.nombre, stock.valor_referencia, subcategoria.nombre, stock.Unid, stock.unidades FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>0))", function(error: any, results: any, fields: any) {
             if (error) {
                 console.log(error);
+                res.json({"error": true});
                 return;
             }
            // console.log("enviando respuesta" +results);
