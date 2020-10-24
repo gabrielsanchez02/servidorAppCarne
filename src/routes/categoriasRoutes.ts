@@ -16,8 +16,7 @@ class categoriasRoutes {
         //this.router.post('/', categoriascontroller.create);       
         //this.router.put('/:id',categoriascontroller.update);
         //this.router.delete('/:id',categoriascontroller.delete)
-        
-        
+               
     }   
 }
 
