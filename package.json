@@ -5,11 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "apollo-server-express": "^2.14.3",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.6.0",
     "graphql-tools": "^4.0.8",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",

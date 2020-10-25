@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 
 
-import pool from '../database';
 
 class RepartidoresController {
 
-    public async lista(req: Request, res: Response): Promise<void> {      
+   /* public async lista(req: Request, res: Response): Promise<void> {      
         try{
             await pool.query('SELECT * FROM t_repartidor', (err , repartidores , fields) => {
                 if(!err){
@@ -21,6 +20,7 @@ class RepartidoresController {
     }
 
     public async getOne(req: Request, res: Response): Promise<any> {
+
         const { id } = req.params;
         await pool.query('SELECT * FROM t_repartidor WHERE ID_repartidor = ? ', [id], (err, repartidor, fields)=>{
             if(!err) {
@@ -28,8 +28,9 @@ class RepartidoresController {
                 } else { 
                 console.log(err)}
         });
+    
         
-    }
+    } 
 
     public async create(req: Request, res: Response): Promise<void> {
         await pool.query('INSERT INTO ID_repartidor SET ?', req.body, (err, repartidor, fields)=>{
@@ -53,7 +54,7 @@ class RepartidoresController {
         const { id } = req.params;
         await pool.query('DELETE FROM t_repartidor WHERE id = ?', [id]);
         res.json({ message: "The game was deleted" });
-    }
+    }*/
 }
 
 const repartidoresController = new RepartidoresController;

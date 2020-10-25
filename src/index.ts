@@ -6,6 +6,7 @@ import categoriasRoutes from './routes/categoriasRoutes';
 import localesRoutes from './routes/localesRoutes';
 import repartidoresRoutes from './routes/repartidoresRoutes';
 import stockRoutes from './routes/stockRoutes';
+import authRoutes from './routes/authRoutes';
 
 class Server{
     public app:Application;
@@ -18,7 +19,7 @@ class Server{
         this.app.set('port', process.env.port || 3306)
         this.app.use(morgan( 'dev')); // morgan sirve para monitorear el server GET PUT POST etc
         this.app.use(cors());
-        this.app.use(express.json()); // puede aceptar json 
+        this.app.use(express.json()); // puede entender json y convertir a obj js
         this.app.use(express.urlencoded({extended :false})); //acepta enviar desde formulario html
     }
     routes():void{
@@ -27,6 +28,7 @@ class Server{
         this.app.use('/api/locales',localesRoutes);
         this.app.use('/api/repartidores',repartidoresRoutes);
         this.app.use('/api/stock',stockRoutes);
+        this.app.use('/login',authRoutes);
 
     
 

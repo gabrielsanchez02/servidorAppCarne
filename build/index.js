@@ -11,6 +11,7 @@ const categoriasRoutes_1 = __importDefault(require("./routes/categoriasRoutes"))
 const localesRoutes_1 = __importDefault(require("./routes/localesRoutes"));
 const repartidoresRoutes_1 = __importDefault(require("./routes/repartidoresRoutes"));
 const stockRoutes_1 = __importDefault(require("./routes/stockRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -21,7 +22,7 @@ class Server {
         this.app.set('port', process.env.port || 3306);
         this.app.use(morgan_1.default('dev')); // morgan sirve para monitorear el server GET PUT POST etc
         this.app.use(cors_1.default());
-        this.app.use(express_1.default.json()); // puede aceptar json 
+        this.app.use(express_1.default.json()); // puede entender json y convertir a obj js
         this.app.use(express_1.default.urlencoded({ extended: false })); //acepta enviar desde formulario html
     }
     routes() {
@@ -30,6 +31,7 @@ class Server {
         this.app.use('/api/locales', localesRoutes_1.default);
         this.app.use('/api/repartidores', repartidoresRoutes_1.default);
         this.app.use('/api/stock', stockRoutes_1.default);
+        this.app.use('/login', authRoutes_1.default);
         //this.app.use('/api/personas',personasRoutes);
     }
     start() {

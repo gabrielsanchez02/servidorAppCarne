@@ -16,6 +16,7 @@ class categoriaController {
                     console.log(error);
                     return;
                 }
+                
                // console.log("enviando respuesta" +results);
                res.json({"error": false ,categorias});
             });

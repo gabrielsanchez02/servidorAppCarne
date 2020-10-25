@@ -25,6 +25,7 @@ class stockController {
     });
 
 }
+
 /*
   public async lista(req: Request, res: Response): Promise<void> {
     try {
