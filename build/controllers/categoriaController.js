@@ -19,6 +19,7 @@ class categoriaController {
                 connection.query("SELECT CAST(`subcategoria`.`id_categoria` AS CHAR) AS `id`, `subcategoria`.`nombre` AS `title`, '2020-07-28T21:07:57.217Z' AS `createdAt`, 'http://www.donpollo.cl/wp-content/uploads/2018/01/paleta.8.png' AS `imagen`, `subcategoria`.id_subcat AS `numOfProducts` FROM `appcarne_app`.subcategoria INNER JOIN `appcarne_app`.categoria ON (`subcategoria`.id_categoria = `categoria`.id_cat) WHERE (`subcategoria`.id_categoria = 4) LIMIT 5;", function (error, categorias, fields) {
                     if (error) {
                         console.log(error);
+                        res.json({ "error": true });
                         return;
                     }
                     // console.log("enviando respuesta" +results);
