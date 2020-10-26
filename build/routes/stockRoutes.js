@@ -12,10 +12,10 @@ class stockRoutes {
     }
     config() {
         this.router.get('/', stockController_1.default.listado);
-        /* this.router.get('/:id', stockController.getOne);
-         this.router.post('/', stockController.create);
-         this.router.put('/:id', stockController.update);
-         this.router.delete('/:id', stockController.delete);*/
+        this.router.get('/:cant/:subcat', stockController_1.default.listadoxcant);
+        /*this.router.post('/', stockController.create);
+        this.router.put('/:id', stockController.update);
+        this.router.delete('/:id', stockController.delete);*/
     }
 }
 exports.default = new stockRoutes().router;

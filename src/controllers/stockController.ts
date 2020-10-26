@@ -23,6 +23,29 @@ class stockController {
             res.json({"error": false ,results});
         });
     });
+    
+
+}
+public async listadoxcant(req: Request, res: Response): Promise<void> {
+  // async connection to database
+
+  database.then(function(connection: { query: (arg0: string, arg1: (error: any, results: any, fields: any) => void) => void; }){
+      const { cant, subcat } = req.params;
+      console.log('entra');
+      console.log(cant);
+      //console.log("entro a stock listado desp database");
+      //SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'https://www.produccionsrl.com/wp-content/uploads/2018/11/25-500-Cerdo-Punta-de-espalda1.jpg' AS `imagen`, 'sub Titulo' AS "subTitle", 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"));
+      connection.query("SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'https://www.produccionsrl.com/wp-content/uploads/2018/11/25-500-Cerdo-Punta-de-espalda1.jpg' AS `image`, 'sub Titulo' AS 'subTitle', 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"))", function(error: any, results: any, fields: any) {
+          if (error) {
+              console.log(error);
+              res.json({"error": true});
+              return;
+          }
+         // console.log("enviando respuesta" +results);
+          res.json({"error": false ,results});
+      });
+  });
+  
 
 }
 

@@ -12,8 +12,8 @@ class stockRoutes {
 
     config() {
         this.router.get('/', stockController.listado);
-       /* this.router.get('/:id', stockController.getOne);
-        this.router.post('/', stockController.create);
+        this.router.get('/:cant/:subcat', stockController.listadoxcant);
+        /*this.router.post('/', stockController.create);
         this.router.put('/:id', stockController.update);
         this.router.delete('/:id', stockController.delete);*/
     }
