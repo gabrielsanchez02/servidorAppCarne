@@ -23,42 +23,70 @@ class authController {
             const usuario = new User(username, password, email, "");
             usuario.password = MD5(usuario.password).toString();
             console.log(usuario);
-            // res.json({ mensaje: "recibido" });
             database.then(function (connection) {
-                //console.log("entro a auth y hacer la query");
-                var values = "('" +
-                    usuario.username +
-                    "','" +
-                    usuario.password +
-                    "','" +
-                    usuario.email +
-                    "','" +
-                    usuario.activation_code +
-                    "')";
-                var sql = "INSERT INTO users (username, password, email, activation_code) VALUES " +
-                    values;
-                //console.log(sql);
-                //console.log(values);
-                connection.query(sql, function (error, results) {
-                    if (error) {
-                        console.log(error);
-                        res.json({ error: true, mensaje: "recibido", autenticado: false });
-                        return;
-                    }
-                    // console.log("enviando respuesta" + results);
-                    var Userid = results.insertId;
-                    const token = jwt.sign({ id: Userid }, config.secreto, {
-                        expiresIn: 60 * 30,
-                    });
-                    res.json({
-                        error: false,
-                        mensaje: "recibido",
-                        autenticado: true,
-                        token,
-                        Userid,
+                //console.log("entro a auth listado desp database");
+                var sql2 = "SELECT * FROM `users` WHERE username = '" + username + "'";
+                // console.log(sql2);
+                connection.query(sql2, function (error, user, fields) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        //console.log(user[0].username);
+                        if (user[0] != null) {
+                            //  console.log(error);
+                            console.log("Usuario encontrado ");
+                            res
+                                .status(404)
+                                .json({
+                                error: true,
+                                mensaje: "Ya se encuentra un usuario registrado con ese nombre",
+                            });
+                            return;
+                        }
+                        else {
+                            console.log("No se encontro usuario");
+                            database.then(function (connection) {
+                                //console.log("entro a auth y hacer la query");
+                                var values = "('" +
+                                    usuario.username +
+                                    "','" +
+                                    usuario.password +
+                                    "','" +
+                                    usuario.email +
+                                    "','" +
+                                    usuario.activation_code +
+                                    "')";
+                                var sql = "INSERT INTO users (username, password, email, activation_code) VALUES " +
+                                    values;
+                                //console.log(sql);
+                                //console.log(values);
+                                connection.query(sql, function (error, results) {
+                                    if (error) {
+                                        console.log(error);
+                                        res.json({
+                                            error: true,
+                                            mensaje: "recibido",
+                                            autenticado: false,
+                                        });
+                                        return;
+                                    }
+                                    // console.log("enviando respuesta" + results);
+                                    var Userid = results.insertId;
+                                    const token = jwt.sign({ id: Userid }, config.secreto, {
+                                        expiresIn: 60 * 30,
+                                    });
+                                    res.json({
+                                        error: false,
+                                        mensaje: "recibido",
+                                        autenticado: true,
+                                        token,
+                                        Userid,
+                                    });
+                                });
+                            });
+                        }
                     });
                 });
             });
+            // res.json({ mensaje: "recibido" });
         });
     }
     ingresar(req, res) {
