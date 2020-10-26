@@ -1,0 +1,1 @@
+module.exports = {secreto : 'EstetexToEsSeCreto'};

@@ -18,10 +18,16 @@ class User {
     this.activation_code = activation_code;
   }
 
-  public async encriptaPass(password: String) {
+  /*public async encriptaPass(password: String) {
     const salt = await bcrypt.genSalt(10);
     return bcrypt.hash(password, salt);
-  }
+  }*/
+
+  /*public async validatePassword(pass: String) {
+      console.log({pass});
+   
+   return bcrypt.compare(pass,this.password);
+  }*/
 }
 
 module.exports = User;

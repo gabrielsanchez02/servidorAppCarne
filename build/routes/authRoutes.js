@@ -11,8 +11,8 @@ class authRoutes {
         this.config();
     }
     config() {
-        this.router.post('/singup', authController_1.default.singup);
-        this.router.post('/singin', authController_1.default.singin);
+        this.router.post('/registrarse', authController_1.default.registrarse);
+        this.router.post('/ingresar', authController_1.default.ingresar);
         this.router.get('/perfil', authController_1.default.perfil);
         /* this.router.get('/:id', stockController.getOne);
          this.router.post('/', stockController.create);
