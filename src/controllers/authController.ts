@@ -140,7 +140,7 @@ class authController {
             console.log("passowords coinciden");
 
             const token = jwt.sign({ id: user[0].id }, config.secreto, {
-              expiresIn: 60 * 60, //media hora 60 sec * 30 // 60*60*24 = 1 dia
+              expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
             });
 
             //console.log("passowords DISTINTOS");
@@ -156,8 +156,6 @@ class authController {
   }
 
   public async perfil(req: Request, res: Response): Promise<void> {
-    // async connection to database
-
     const token = req.headers["x-access-token"];
     console.log({ token });
     if (!token) {
@@ -167,11 +165,24 @@ class authController {
     }
 
     //console.log(decode.id);
-    var decode = jwt.verify(token, config.secreto);
+
+    var decode = jwt.verify(token, config.secreto, function (
+      err: any,
+      token: any
+    ) {
+      if (err) {
+        console.log("dio error en validar token");
+        return res.status(401).json({ err, mensaje: "Token Expirado" });
+      } else {
+        return token;
+      }
+    });
+
+    console.log("entro a decode");
+   // var decode1 = jwt.verify(token, config.secretoS);
     console.log({ decode });
-    
-  
-   /* decode = jwt.verify(token, config.secreto, function (
+    //decode = decode1;
+    /* decode = jwt.verify(token, config.secreto, function (
       err: any,
       decoded: any
     ) {

@@ -122,7 +122,7 @@ class authController {
                             else {
                                 console.log("passowords coinciden");
                                 const token = jwt.sign({ id: user[0].id }, config.secreto, {
-                                    expiresIn: 60 * 60,
+                                    expiresIn: 60 * 30,
                                 });
                                 //console.log("passowords DISTINTOS");
                                 // res.redirect('');
@@ -138,7 +138,6 @@ class authController {
     }
     perfil(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // async connection to database
             const token = req.headers["x-access-token"];
             console.log({ token });
             if (!token) {
@@ -147,24 +146,35 @@ class authController {
                     .json({ autenticado: false, mensaje: "No ha provisto un token" });
             }
             //console.log(decode.id);
-            var decode = jwt.verify(token, config.secreto);
+            var decode = jwt.verify(token, config.secreto, function (err, token) {
+                if (err) {
+                    console.log("dio error en validar token");
+                    return res.status(401).json({ err, mensaje: "Token Expirado" });
+                }
+                else {
+                    return token;
+                }
+            });
+            console.log("entro a decode");
+            // var decode1 = jwt.verify(token, config.secretoS);
             console.log({ decode });
+            //decode = decode1;
             /* decode = jwt.verify(token, config.secreto, function (
-               err: any,
-               decoded: any
-             ) {
-               if (err) {
-                 //console.log({err,decoded})
-                 res.status(401).json({ err, mensaje: "token expiro" });
-               } else {
-                 var decodeTrue = jwt.verify(token, config.secreto);
-                 console.log({ decode, decodeTrue });
-                 decode = decodeTrue;
-               }
-             });
-             console.log({ "antes ": decode });
-             decode = jwt.verify(token, config.secreto);
-            */
+              err: any,
+              decoded: any
+            ) {
+              if (err) {
+                //console.log({err,decoded})
+                res.status(401).json({ err, mensaje: "token expiro" });
+              } else {
+                var decodeTrue = jwt.verify(token, config.secreto);
+                console.log({ decode, decodeTrue });
+                decode = decodeTrue;
+              }
+            });
+            console.log({ "antes ": decode });
+            decode = jwt.verify(token, config.secreto);
+           */
             database.then(function (connection) {
                 var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
                 //console.log(decode.id + " " + sql1);
