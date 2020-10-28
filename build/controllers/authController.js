@@ -71,12 +71,33 @@ class authController {
                                     const token = jwt.sign({ id: Userid }, config.secreto, {
                                         expiresIn: 60 * 30,
                                     });
-                                    res.json({
-                                        error: false,
-                                        mensaje: "Nuevo usuario creado",
-                                        autenticado: true,
-                                        token,
-                                        Userid,
+                                    database.then(function (connection) {
+                                        //console.log("entro a auth listado desp database");
+                                        var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
+                                        console.log(sql2);
+                                        connection.query(sql2, function (error, user, fields) {
+                                            return __awaiter(this, void 0, void 0, function* () {
+                                                //console.log(user[0].username);
+                                                if (user[0] == null) {
+                                                    //  console.log(error);
+                                                    console.log("Usuario no encontrado ");
+                                                    res
+                                                        .status(404)
+                                                        .json({ error: true, mensaje: "Usuario no encontrado" });
+                                                    return;
+                                                }
+                                                else {
+                                                    res.json({
+                                                        error: false,
+                                                        mensaje: "Nuevo usuario creado",
+                                                        autenticado: true,
+                                                        token,
+                                                        user,
+                                                    });
+                                                }
+                                                // const passValido = await usuarioNuevo.validatePassword(password);
+                                            });
+                                        });
                                     });
                                 });
                             });

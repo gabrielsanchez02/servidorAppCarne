@@ -82,12 +82,40 @@ class authController {
               const token = jwt.sign({ id: Userid }, config.secreto, {
                 expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
               });
-              res.json({
-                error: false,
-                mensaje: "Nuevo usuario creado",
-                autenticado: true,
-                token,
-                Userid,
+
+              database.then(function (connection: {
+                query: (
+                  arg0: string,
+                  arg1: (error: any, results: any, fields: any) => void
+                ) => void;
+              }) {
+                //console.log("entro a auth listado desp database");
+                var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
+                 console.log(sql2);
+                connection.query(sql2, async function (
+                  error: any,
+                  user: any,
+                  fields: any
+                ) {
+                  //console.log(user[0].username);
+                  if (user[0] == null) {
+                    //  console.log(error);
+                    console.log("Usuario no encontrado ");
+                    res
+                      .status(404)
+                      .json({ error: true, mensaje: "Usuario no encontrado" });
+                    return;
+                  } else {
+                    res.json({
+                      error: false,
+                      mensaje: "Nuevo usuario creado",
+                      autenticado: true,
+                      token,
+                      user,
+                    });
+                  }
+                  // const passValido = await usuarioNuevo.validatePassword(password);
+                });
               });
             });
           });
@@ -179,7 +207,7 @@ class authController {
     });
 
     console.log("entro a decode");
-   // var decode1 = jwt.verify(token, config.secretoS);
+    // var decode1 = jwt.verify(token, config.secretoS);
     console.log({ decode });
     //decode = decode1;
     /* decode = jwt.verify(token, config.secreto, function (
