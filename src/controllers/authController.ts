@@ -91,7 +91,7 @@ class authController {
               }) {
                 //console.log("entro a auth listado desp database");
                 var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
-                 console.log(sql2);
+                console.log(sql2);
                 connection.query(sql2, async function (
                   error: any,
                   user: any,
@@ -148,9 +148,12 @@ class authController {
         if (user[0] == null) {
           //  console.log(error);
           console.log("Usuario no encontrado ");
-          res
-            .status(404)
-            .json({ error: true, mensaje: "Usuario no registrado" });
+          res.status(404).json({
+            error: true,
+            autenticado: false,
+            token: null,
+            mensaje: "Usuario no registrado",
+          });
           return;
         } else {
           const usuarioNuevo = new User(username, password);
@@ -158,7 +161,7 @@ class authController {
           // console.log({ usuarioNuevo });
           if (user[0].password != usuarioNuevo.password) {
             console.log("passowords DISTINTOS");
-            res.status(401).json({
+            res.status(404).json({
               error: true,
               autenticado: false,
               token: null,
@@ -175,7 +178,13 @@ class authController {
             // res.redirect('');
             // console.log(user[0].password);
 
-            res.json({ error: false, autenticado: true, token, user });
+            res.json({
+              error: false,
+              mensaje: "Nuevo ingreso de usuario",
+              autenticado: true,
+              token,
+              user,
+            });
           }
         }
         // const passValido = await usuarioNuevo.validatePassword(password);
@@ -188,7 +197,7 @@ class authController {
     console.log({ token });
     if (!token) {
       res
-        .status(401)
+        .status(404)
         .json({ autenticado: false, mensaje: "No ha provisto un token" });
     }
 
@@ -200,7 +209,7 @@ class authController {
     ) {
       if (err) {
         console.log("dio error en validar token");
-        return res.status(401).json({ err, mensaje: "Token Expirado" });
+        return res.status(404).json({ err, mensaje: "Token Expirado" });
       } else {
         return token;
       }
@@ -210,22 +219,6 @@ class authController {
     // var decode1 = jwt.verify(token, config.secretoS);
     console.log({ decode });
     //decode = decode1;
-    /* decode = jwt.verify(token, config.secreto, function (
-      err: any,
-      decoded: any
-    ) {
-      if (err) {
-        //console.log({err,decoded})
-        res.status(401).json({ err, mensaje: "token expiro" });
-      } else {
-        var decodeTrue = jwt.verify(token, config.secreto);
-        console.log({ decode, decodeTrue });
-        decode = decodeTrue;
-      }
-    });
-    console.log({ "antes ": decode });
-    decode = jwt.verify(token, config.secreto);
-   */
     database.then(function (connection: {
       query: (
         arg0: string,
@@ -238,7 +231,7 @@ class authController {
         if (error) {
           console.log(error);
           res
-            .status(401)
+            .status(404)
             .json({ error: true, mensaje: "Usuario no encontrado" });
           return;
         } else {
