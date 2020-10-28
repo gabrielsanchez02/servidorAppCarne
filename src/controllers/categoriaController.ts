@@ -8,7 +8,7 @@ class categoriaController {
     public async listado(req: Request, res: Response): Promise<void> {
         // async connection to database
 
-    
+     
         database.then(function(connection: { query: (arg0: string, arg1: (error: any, results: any, fields: any) => void) => void; }){
        
             //console.log("entro a stock listado desp database");

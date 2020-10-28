@@ -33,9 +33,7 @@ class authController {
                         if (user[0] != null) {
                             //  console.log(error);
                             console.log("Usuario encontrado ");
-                            res
-                                .status(404)
-                                .json({
+                            res.status(404).json({
                                 error: true,
                                 mensaje: "Ya se encuentra un usuario registrado con ese nombre",
                             });
@@ -75,7 +73,7 @@ class authController {
                                     });
                                     res.json({
                                         error: false,
-                                        mensaje: "recibido",
+                                        mensaje: "Nuevo usuario creado",
                                         autenticado: true,
                                         token,
                                         Userid,
@@ -140,17 +138,46 @@ class authController {
     }
     perfil(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // async connection to database
             const token = req.headers["x-access-token"];
+            console.log({ token });
             if (!token) {
                 res
                     .status(401)
                     .json({ autenticado: false, mensaje: "No ha provisto un token" });
             }
-            const decode = jwt.verify(token, config.secreto);
-            // console.log(decode.id);
+            //console.log(decode.id);
+            var decode = jwt.verify(token, config.secreto, function (err, token) {
+                if (err) {
+                    console.log("dio error en validar token");
+                    return res.status(401).json({ err, mensaje: "Token Expirado" });
+                }
+                else {
+                    return token;
+                }
+            });
+            console.log("entro a decode");
+            // var decode1 = jwt.verify(token, config.secretoS);
+            console.log({ decode });
+            //decode = decode1;
+            /* decode = jwt.verify(token, config.secreto, function (
+              err: any,
+              decoded: any
+            ) {
+              if (err) {
+                //console.log({err,decoded})
+                res.status(401).json({ err, mensaje: "token expiro" });
+              } else {
+                var decodeTrue = jwt.verify(token, config.secreto);
+                console.log({ decode, decodeTrue });
+                decode = decodeTrue;
+              }
+            });
+            console.log({ "antes ": decode });
+            decode = jwt.verify(token, config.secreto);
+           */
             database.then(function (connection) {
                 var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
+                //console.log(decode.id + " " + sql1);
                 connection.query(sql1, function (error, usuario) {
                     if (error) {
                         console.log(error);
@@ -159,7 +186,11 @@ class authController {
                             .json({ error: true, mensaje: "Usuario no encontrado" });
                         return;
                     }
-                    res.json({ error: false, usuario });
+                    else {
+                        console.log(usuario);
+                        console.log("error: " + error);
+                        res.json({ error, usuario });
+                    }
                 });
             });
         });
