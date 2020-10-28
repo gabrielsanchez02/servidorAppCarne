@@ -62,8 +62,6 @@ const dbServer = {
     database: 'appcarne_app',
     port: 3306
 }
-
-
 const tunnelConfig = {
     host: process.env.DB_SSH_HOST,
     port: 5997,

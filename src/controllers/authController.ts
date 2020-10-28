@@ -35,12 +35,10 @@ class authController {
         if (user[0] != null) {
           //  console.log(error);
           console.log("Usuario encontrado ");
-          res
-            .status(404)
-            .json({
-              error: true,
-              mensaje: "Ya se encuentra un usuario registrado con ese nombre",
-            });
+          res.status(404).json({
+            error: true,
+            mensaje: "Ya se encuentra un usuario registrado con ese nombre",
+          });
           return;
         } else {
           console.log("No se encontro usuario");
@@ -86,7 +84,7 @@ class authController {
               });
               res.json({
                 error: false,
-                mensaje: "recibido",
+                mensaje: "Nuevo usuario creado",
                 autenticado: true,
                 token,
                 Userid,
@@ -96,7 +94,7 @@ class authController {
         }
       });
     });
-    
+
     // res.json({ mensaje: "recibido" });
   }
 
@@ -142,7 +140,7 @@ class authController {
             console.log("passowords coinciden");
 
             const token = jwt.sign({ id: user[0].id }, config.secreto, {
-              expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
+              expiresIn: 60 * 60, //media hora 60 sec * 30 // 60*60*24 = 1 dia
             });
 
             //console.log("passowords DISTINTOS");
@@ -161,14 +159,34 @@ class authController {
     // async connection to database
 
     const token = req.headers["x-access-token"];
+    console.log({ token });
     if (!token) {
       res
         .status(401)
         .json({ autenticado: false, mensaje: "No ha provisto un token" });
     }
-    const decode = jwt.verify(token, config.secreto);
-    // console.log(decode.id);
 
+    //console.log(decode.id);
+    var decode = jwt.verify(token, config.secreto);
+    console.log({ decode });
+    
+  
+   /* decode = jwt.verify(token, config.secreto, function (
+      err: any,
+      decoded: any
+    ) {
+      if (err) {
+        //console.log({err,decoded})
+        res.status(401).json({ err, mensaje: "token expiro" });
+      } else {
+        var decodeTrue = jwt.verify(token, config.secreto);
+        console.log({ decode, decodeTrue });
+        decode = decodeTrue;
+      }
+    });
+    console.log({ "antes ": decode });
+    decode = jwt.verify(token, config.secreto);
+   */
     database.then(function (connection: {
       query: (
         arg0: string,
@@ -176,6 +194,7 @@ class authController {
       ) => void;
     }) {
       var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
+      //console.log(decode.id + " " + sql1);
       connection.query(sql1, function (error: any, usuario: any) {
         if (error) {
           console.log(error);
@@ -183,8 +202,11 @@ class authController {
             .status(401)
             .json({ error: true, mensaje: "Usuario no encontrado" });
           return;
+        } else {
+          console.log(usuario);
+          console.log("error: " + error);
+          res.json({ error, usuario });
         }
-        res.json({ error: false, usuario });
       });
     });
   }

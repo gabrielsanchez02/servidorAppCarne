@@ -29,9 +29,6 @@ class Server{
         this.app.use('/api/repartidores',repartidoresRoutes);
         this.app.use('/api/stock',stockRoutes);
         this.app.use('/login',authRoutes);
-
-    
-
         //this.app.use('/api/personas',personasRoutes);
     }
     start():void{
@@ -39,7 +36,6 @@ class Server{
             console.log('server en puerto', this.app.get('port'))
         })
     }
-
 }
 const server=new Server();
 server.start();
