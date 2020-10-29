@@ -71,33 +71,42 @@ class authController {
                                     const token = jwt.sign({ id: Userid }, config.secreto, {
                                         expiresIn: 60 * 30,
                                     });
-                                    database.then(function (connection) {
-                                        //console.log("entro a auth listado desp database");
-                                        var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
-                                        console.log(sql2);
-                                        connection.query(sql2, function (error, user, fields) {
-                                            return __awaiter(this, void 0, void 0, function* () {
-                                                //console.log(user[0].username);
-                                                if (user[0] == null) {
-                                                    //  console.log(error);
-                                                    console.log("Usuario no encontrado ");
-                                                    res
-                                                        .status(404)
-                                                        .json({ error: true, mensaje: "Usuario no encontrado" });
-                                                    return;
-                                                }
-                                                else {
-                                                    res.json({
-                                                        error: false,
-                                                        mensaje: "Nuevo usuario creado",
-                                                        autenticado: true,
-                                                        token,
-                                                        user,
+                                    /*
+                                                  database.then(function (connection: {
+                                                    query: (
+                                                      arg0: string,
+                                                      arg1: (error: any, results: any, fields: any) => void
+                                                    ) => void;
+                                                  }) {
+                                                    //console.log("entro a auth listado desp database");
+                                                    var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
+                                                    console.log(sql2);
+                                                    connection.query(sql2, async function (
+                                                      error: any,
+                                                      user: any,
+                                                      fields: any
+                                                    ) {
+                                                      //console.log(user[0].username);
+                                                      if (user[0] == null) {
+                                                        //  console.log(error);
+                                                        console.log("Usuario no encontrado ");
+                                                        res
+                                                          .status(404)
+                                                          .json({ error: true, mensaje: "Usuario no encontrado" });
+                                                        return;
+                                                      } else {
+                                                      }
+                                                      // const passValido = await usuarioNuevo.validatePassword(password);
                                                     });
-                                                }
-                                                // const passValido = await usuarioNuevo.validatePassword(password);
-                                            });
-                                        });
+                                                  });
+                                    
+                                                  devuelve el usuario tambien
+                                    */
+                                    res.json({
+                                        error: false,
+                                        mensaje: "Nuevo usuario creado",
+                                        autenticado: true,
+                                        token,
                                     });
                                 });
                             });
@@ -156,7 +165,6 @@ class authController {
                                     mensaje: "Nuevo ingreso de usuario",
                                     autenticado: true,
                                     token,
-                                    user,
                                 });
                             }
                         }

@@ -82,7 +82,7 @@ class authController {
               const token = jwt.sign({ id: Userid }, config.secreto, {
                 expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
               });
-
+/*
               database.then(function (connection: {
                 query: (
                   arg0: string,
@@ -106,16 +106,18 @@ class authController {
                       .json({ error: true, mensaje: "Usuario no encontrado" });
                     return;
                   } else {
-                    res.json({
-                      error: false,
-                      mensaje: "Nuevo usuario creado",
-                      autenticado: true,
-                      token,
-                      user,
-                    });
                   }
                   // const passValido = await usuarioNuevo.validatePassword(password);
                 });
+              });
+
+              devuelve el usuario tambien
+*/
+              res.json({
+                error: false,
+                mensaje: "Nuevo usuario creado",
+                autenticado: true,
+                token,
               });
             });
           });
@@ -183,7 +185,6 @@ class authController {
               mensaje: "Nuevo ingreso de usuario",
               autenticado: true,
               token,
-              user,
             });
           }
         }
