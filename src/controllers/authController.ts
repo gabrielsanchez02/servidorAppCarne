@@ -82,7 +82,7 @@ class authController {
               const token = jwt.sign({ id: Userid }, config.secreto, {
                 expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
               });
-/*
+              /*
               database.then(function (connection: {
                 query: (
                   arg0: string,
@@ -205,16 +205,17 @@ class authController {
     //console.log(decode.id);
 
     var decode = jwt.verify(token, config.secreto, function (
-      err: any,
+      error: any,
       token: any
     ) {
-      if (err) {
+      if (error) {
         console.log("dio error en validar token");
-        return res.status(404).json({ err, mensaje: "Token Expirado" });
+        return res.status(404).json({ error });
       } else {
         return token;
       }
     });
+    
 
     console.log("entro a decode");
     // var decode1 = jwt.verify(token, config.secretoS);
