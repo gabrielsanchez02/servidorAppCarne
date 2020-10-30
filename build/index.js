@@ -19,24 +19,24 @@ class Server {
         this.routes();
     }
     config() {
-        this.app.set('port', process.env.port || 3306);
-        this.app.use(morgan_1.default('dev')); // morgan sirve para monitorear el server GET PUT POST etc
+        this.app.set("port", process.env.port || 3306);
+        this.app.use(morgan_1.default("dev")); // morgan sirve para monitorear el server GET PUT POST etc
         this.app.use(cors_1.default());
         this.app.use(express_1.default.json()); // puede entender json y convertir a obj js
         this.app.use(express_1.default.urlencoded({ extended: false })); //acepta enviar desde formulario html
     }
     routes() {
-        this.app.use('/', indexRoutes_1.default);
-        this.app.use('/api/categorias', categoriasRoutes_1.default);
-        this.app.use('/api/locales', localesRoutes_1.default);
-        this.app.use('/api/repartidores', repartidoresRoutes_1.default);
-        this.app.use('/api/stock', stockRoutes_1.default);
-        this.app.use('/login', authRoutes_1.default);
+        this.app.use("/", indexRoutes_1.default);
+        this.app.use("/api/categorias", categoriasRoutes_1.default);
+        this.app.use("/api/locales", localesRoutes_1.default);
+        this.app.use("/api/repartidores", repartidoresRoutes_1.default);
+        this.app.use("/api/stock", stockRoutes_1.default);
+        this.app.use("/login", authRoutes_1.default);
         //this.app.use('/api/personas',personasRoutes);
     }
     start() {
-        this.app.listen(this.app.get('port'), () => {
-            console.log('server en puerto', this.app.get('port'));
+        this.app.listen(this.app.get("port"), () => {
+            console.log("server en puerto", this.app.get("port"));
         });
     }
 }

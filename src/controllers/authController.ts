@@ -199,7 +199,13 @@ class authController {
     if (!token) {
       res
         .status(404)
-        .json({ autenticado: false, mensaje: "No ha provisto un token" });
+        .json({
+          error: {
+            name: "",
+            message: "No ha provisto un token",
+            expiredAt: "",
+          },
+        });
     }
 
     //console.log(decode.id);
@@ -215,7 +221,6 @@ class authController {
         return token;
       }
     });
-    
 
     console.log("entro a decode");
     // var decode1 = jwt.verify(token, config.secretoS);

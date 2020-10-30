@@ -95,7 +95,7 @@ const database = new Promise((resolve, reject) => {
             if (error) {
                 reject(error);
             }
-            console.log('Base de datos: '+ updatedDbServer.database+' is connected ');
+            console.log('Base de datos: '+updatedDbServer.database+' is connected ');
            // pool = connection.createPool(updatedDbServer);
 
             resolve(connection);

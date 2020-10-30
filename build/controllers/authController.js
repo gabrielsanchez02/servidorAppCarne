@@ -181,7 +181,13 @@ class authController {
             if (!token) {
                 res
                     .status(404)
-                    .json({ autenticado: false, mensaje: "No ha provisto un token" });
+                    .json({
+                    error: {
+                        name: "",
+                        message: "No ha provisto un token",
+                        expiredAt: "",
+                    },
+                });
             }
             //console.log(decode.id);
             var decode = jwt.verify(token, config.secreto, function (error, token) {
