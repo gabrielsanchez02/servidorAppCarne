@@ -1,41 +1,4 @@
-//import mysql1 from 'mysql';
-//import keys from './keys';
-
-import { createConnection } from "mongoose";
-
-
 /*
-
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var xhr = new XMLHttpRequest();*/
-
-/*
-const connection = mysql.createConnection(keys.database);
-  
-  connection.connect((err) => {
-      if(err) throw err;
-      console.log('Base de datos: '+ keys.database.database+' is connected ');  
-  });
-  
-
-const pool = mysql.createPool(keys.database);
-
-pool.getConnection((err, connection) => {
-    console.log('entro a GetConnection '); 
-    if (err) {
-        console.log (err);
-        return;
-    } else{ 
-        connection.release(); 
-             
-    }
-})
-
-export default connection;
-
-*/
-
-
 const mysql = require('mysql2');
 const { Client } = require('ssh2');
 const sshClient = new Client();
@@ -108,7 +71,28 @@ const database = new Promise((resolve, reject) => {
 
 
 
-module.exports = database;
+module.exports = database;*/
+
+/*
+
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var xhr = new XMLHttpRequest();*/
+import mysql from "mysql";
+import keys from "./keys";
+
+const connection = mysql.createPool(keys.database);
+
+connection.getConnection((err, connection) => {
+  if (err) {
+    console.log(err);
+    return;
+  } else {
+    connection.release();
+    console.log(" Base de datos: " + keys.database.database + " is connected ");
+  }
+});
+
+export default connection;
 
 /*
 

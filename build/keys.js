@@ -1,23 +1,22 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    database: {
+/*export default{
+    database:{
         host: 'vps-1869856-x.dattaweb.com',
         user: 'root',
         password: 'bfCzAW3UFwYv',
         database: 'appcarne_app',
+       // port: 3306
     }
+}*/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    database: {
+        host: "127.0.0.1",
+        user: "root",
+        password: "",
+        database: "appcarne_app",
+    },
 };
-/*export default {
-  database: {
-    host: "127.0.0.1",
-    user: "root",
-    password: "root",
-    database: "sender_bd",
-
-    //port: 3306
-  },
-};*/
 /*export default{
     database:{
             host: 'c161.ferozo.com',

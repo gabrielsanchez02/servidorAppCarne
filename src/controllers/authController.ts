@@ -1,9 +1,9 @@
 import e, { Request, Response } from "express";
 import { token } from "morgan";
 
-//import database from "../database";
+import connection from "../database";
 
-var database = require("../database");
+//var connection = require("../database");
 var User = require("../modelos/user");
 var jwt = require("jsonwebtoken");
 var config = require("../config");
@@ -17,112 +17,72 @@ class authController {
     usuario.password = MD5(usuario.password).toString();
     console.log(usuario);
 
-    database.then(function (connection: {
-      query: (
-        arg0: string,
-        arg1: (error: any, results: any, fields: any) => void
-      ) => void;
-    }) {
-      //console.log("entro a auth listado desp database");
-      var sql2 = "SELECT * FROM `users` WHERE username = '" + username + "'";
-      // console.log(sql2);
-      connection.query(sql2, async function (
-        error: any,
-        user: any,
-        fields: any
-      ) {
-        //console.log(user[0].username);
-        if (user[0] != null) {
-          //  console.log(error);
-          console.log("Usuario encontrado ");
-          res.status(404).json({
-            error: true,
-            mensaje: "Ya se encuentra un usuario registrado con ese nombre",
-          });
-          return;
-        } else {
-          console.log("No se encontro usuario");
-          database.then(function (connection: {
-            query: (
-              arg0: string,
-              arg1: (error: any, results: any, fields: any) => void
-            ) => void;
-          }) {
-            //console.log("entro a auth y hacer la query");
+    //console.log("entro a auth listado desp database");
+    var sql2 = "SELECT * FROM `users` WHERE username = '" + username + "'";
+    // console.log(sql2);
+    connection.query(sql2, (error: any, user: any) => {
+      //console.log(user[0].username);
+      if (user[0] != null) {
+        //  console.log(error);
+        console.log("Usuario encontrado ");
+        res.status(404).json({
+          error: true,
+          mensaje: "Ya se encuentra un usuario registrado con ese nombre",
+        });
+        return;
+      } else {
+        console.log("No se encontro usuario");
+        //console.log("entro a auth y hacer la query");
 
-            var values =
-              "('" +
-              usuario.username +
-              "','" +
-              usuario.password +
-              "','" +
-              usuario.email +
-              "','" +
-              usuario.activation_code +
-              "')";
-            var sql =
-              "INSERT INTO users (username, password, email, activation_code) VALUES " +
-              values;
-            //console.log(sql);
-            //console.log(values);
-            connection.query(sql, function (error: any, results: any) {
-              if (error) {
-                console.log(error);
-                res.json({
-                  error: true,
-                  mensaje: "recibido",
-                  autenticado: false,
-                });
-                return;
-              }
-              // console.log("enviando respuesta" + results);
+        var d = new Date();
 
-              var Userid = results.insertId;
+        var dformat =
+          [d.getFullYear(), d.getMonth() + 1, d.getDate()].join("-") +
+          " " +
+          [d.getHours(), d.getMinutes(), d.getSeconds()].join(":");
 
-              const token = jwt.sign({ id: Userid }, config.secreto, {
-                expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
-              });
-              /*
-              database.then(function (connection: {
-                query: (
-                  arg0: string,
-                  arg1: (error: any, results: any, fields: any) => void
-                ) => void;
-              }) {
-                //console.log("entro a auth listado desp database");
-                var sql2 = "SELECT * FROM `users` WHERE id = '" + Userid + "'";
-                console.log(sql2);
-                connection.query(sql2, async function (
-                  error: any,
-                  user: any,
-                  fields: any
-                ) {
-                  //console.log(user[0].username);
-                  if (user[0] == null) {
-                    //  console.log(error);
-                    console.log("Usuario no encontrado ");
-                    res
-                      .status(404)
-                      .json({ error: true, mensaje: "Usuario no encontrado" });
-                    return;
-                  } else {
-                  }
-                  // const passValido = await usuarioNuevo.validatePassword(password);
-                });
-              });
-
-              devuelve el usuario tambien
-*/
-              res.json({
-                error: false,
-                mensaje: "Nuevo usuario creado",
-                autenticado: true,
-                token,
-              });
+        console.log(dformat);
+        var values =
+          "('" +
+          usuario.username +
+          "','" +
+          usuario.password +
+          "','" +
+          usuario.email +
+          "','" +
+          usuario.ip_address +
+          "','" +
+          dformat +
+          "')";
+        var sql =
+          "INSERT INTO users (username, password, email, ip_address,created_on) VALUES " +
+          values;
+        //console.log(sql);
+        //console.log(values);
+        connection.query(sql, (error: any, results: any) => {
+          if (error) {
+            console.log(error);
+            console.log("enviando respuesta" + results);
+            res.json({
+              error: true,
+              mensaje: "recibido",
+              autenticado: false,
             });
+            return;
+          }
+          // console.log("enviando respuesta" + results);
+          var Userid = results.insertId;
+          const token = jwt.sign({ id: Userid }, config.secreto, {
+            expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
           });
-        }
-      });
+          res.json({
+            error: false,
+            mensaje: "Nuevo usuario creado",
+            autenticado: true,
+            token,
+          });
+        });
+      }
     });
 
     // res.json({ mensaje: "recibido" });
@@ -130,66 +90,54 @@ class authController {
 
   public async ingresar(req: Request, res: Response): Promise<void> {
     // async connection to database
-
     const { username, password } = req.body;
-    database.then(function (connection: {
-      query: (
-        arg0: string,
-        arg1: (error: any, results: any, fields: any) => void
-      ) => void;
-    }) {
-      //console.log("entro a auth listado desp database");
-      var sql2 = "SELECT * FROM `users` WHERE username = '" + username + "'";
-      // console.log(sql2);
-      connection.query(sql2, async function (
-        error: any,
-        user: any,
-        fields: any
-      ) {
-        //console.log(user[0].username);
-        if (user[0] == null) {
-          //  console.log(error);
-          console.log("Usuario no encontrado ");
+    //console.log("entro a auth listado desp database");
+    var sql2 = "SELECT * FROM `users` WHERE username = '" + username + "'";
+    // console.log(sql2);
+    await connection.query(sql2, (error, user, fields) => {
+      //console.log(user[0].username);
+      if (user[0] == null) {
+        //  console.log(error);
+        console.log("Usuario no encontrado ");
+        res.status(404).json({
+          error: true,
+          autenticado: false,
+          token: null,
+          mensaje: "Usuario no registrado",
+        });
+        return;
+      } else {
+        const usuarioNuevo = new User(username, password);
+        usuarioNuevo.password = MD5(usuarioNuevo.password).toString();
+        // console.log({ usuarioNuevo });
+        if (user[0].password != usuarioNuevo.password) {
+          console.log("passowords DISTINTOS");
           res.status(404).json({
             error: true,
             autenticado: false,
             token: null,
-            mensaje: "Usuario no registrado",
+            mensaje: "Password incorrecto",
           });
-          return;
         } else {
-          const usuarioNuevo = new User(username, password);
-          usuarioNuevo.password = MD5(usuarioNuevo.password).toString();
-          // console.log({ usuarioNuevo });
-          if (user[0].password != usuarioNuevo.password) {
-            console.log("passowords DISTINTOS");
-            res.status(404).json({
-              error: true,
-              autenticado: false,
-              token: null,
-              mensaje: "Password incorrecto",
-            });
-          } else {
-            console.log("passowords coinciden");
+          console.log("passowords coinciden");
 
-            const token = jwt.sign({ id: user[0].id }, config.secreto, {
-              expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
-            });
+          const token = jwt.sign({ id: user[0].id }, config.secreto, {
+            expiresIn: 60 * 30, //media hora 60 sec * 30 // 60*60*24 = 1 dia
+          });
 
-            //console.log("passowords DISTINTOS");
-            // res.redirect('');
-            // console.log(user[0].password);
+          //console.log("passowords DISTINTOS");
+          // res.redirect('');
+          // console.log(user[0].password);
 
-            res.json({
-              error: false,
-              mensaje: "Nuevo ingreso de usuario",
-              autenticado: true,
-              token,
-            });
-          }
+          res.json({
+            error: false,
+            mensaje: "Nuevo ingreso de usuario",
+            autenticado: true,
+            token,
+          });
         }
-        // const passValido = await usuarioNuevo.validatePassword(password);
-      });
+      }
+      // const passValido = await usuarioNuevo.validatePassword(password);
     });
   }
 
@@ -224,32 +172,25 @@ class authController {
     //console.log("entro a decode");
     // var decode1 = jwt.verify(token, config.secretoS);
     console.log({ decode });
-    //decode = decode1;
-    database.then(function (connection: {
-      query: (
-        arg0: string,
-        arg1: (error: any, results: any, fields: any) => void
-      ) => void;
-    }) {
-     // console.log("variable decode id: "+decode.id);
-      if (decode.id != undefined) {
-        var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
-        //console.log(decode.id + " " + sql1);
-        connection.query(sql1, function (error: any, usuario: any) {
-          if (error) {
-            console.log(error);
-            res
-              .status(404)
-              .json({ error: true, mensaje: "Usuario no encontrado" });
-            return;
-          } else {
-            //console.log(usuario);
-            console.log("error: " + error);
-            res.json({ error, usuario });
-          }
-        });
-      }
-    });
+
+    // console.log("variable decode id: "+decode.id);
+    if (decode.id != undefined) {
+      var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
+      //console.log(decode.id + " " + sql1);
+      connection.query(sql1, (error: any, usuario: any) => {
+        if (error) {
+          console.log(error);
+          res
+            .status(404)
+            .json({ error: true, mensaje: "Usuario no encontrado" });
+          return;
+        } else {
+          //console.log(usuario);
+          console.log("error: " + error);
+          res.json({ error, usuario });
+        }
+      });
+    }
   }
 
   /*

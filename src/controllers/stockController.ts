@@ -2,54 +2,53 @@ import { Request, Response } from "express";
 
 //import database from "../database";
 
-var database = require('../database');
-
+import connection from "../database";
 
 class stockController {
-
   public async listado(req: Request, res: Response): Promise<void> {
     // async connection to database
- 
-    database.then(function(connection: { query: (arg0: string, arg1: (error: any, results: any, fields: any) => void) => void; }){
-   
-        //console.log("entro a stock listado desp database");
-        connection.query(" SELECT stock.idprod, stock.nombre, categoria.nombre, stock.valor_referencia, subcategoria.nombre, stock.Unid, stock.unidades FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>0))", function(error: any, results: any, fields: any) {
-            if (error) {
-                console.log(error);
-                res.json({"error": true});
-                return;
-            }
-           // console.log("enviando respuesta" +results);
-            res.json({"error": false ,results});
-        });
-    });
-    
 
-}
-public async listadoxcant(req: Request, res: Response): Promise<void> {
-  // async connection to database
+    //console.log("entro a stock listado desp database");
+    connection.query(
+      " SELECT stock.idprod, stock.nombre, categoria.nombre, stock.valor_referencia, subcategoria.nombre, stock.Unid, stock.unidades FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>0))",
+      function (error: any, results: any, fields: any) {
+        if (error) {
+          console.log(error);
+          res.json({ error: true });
+          return;
+        }
+        // console.log("enviando respuesta" +results);
+        res.json({ error: false, results });
+      }
+    );
+  }
+  public async listadoxcant(req: Request, res: Response): Promise<void> {
+    // async connection to database
 
-  database.then(function(connection: { query: (arg0: string, arg1: (error: any, results: any, fields: any) => void) => void; }){
-      const { cant, subcat } = req.params;
-      console.log('entra');
-      console.log(cant);
-      //console.log("entro a stock listado desp database");
-      //SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'https://www.produccionsrl.com/wp-content/uploads/2018/11/25-500-Cerdo-Punta-de-espalda1.jpg' AS `imagen`, 'sub Titulo' AS "subTitle", 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"));
-      connection.query("SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'http://www.donpollo.cl/wp-content/uploads/2018/01/costillar-centro.4.png' AS `image`, 'sub Titulo' AS 'subTitle', 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"))", function(error: any, results: any, fields: any) {
-          if (error) {
-              console.log(error);
-              res.json({"error": true});
-              return;
-          }
-         // console.log("enviando respuesta" +results);
-          res.json({"error": false ,results});
-      });
-  });
-  
+    const { cant, subcat } = req.params;
+    console.log("entra");
+    console.log(cant);
+    //console.log("entro a stock listado desp database");
+    //SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'https://www.produccionsrl.com/wp-content/uploads/2018/11/25-500-Cerdo-Punta-de-espalda1.jpg' AS `imagen`, 'sub Titulo' AS "subTitle", 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"));
+    connection.query(
+      "SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'http://www.donpollo.cl/wp-content/uploads/2018/01/costillar-centro.4.png' AS `image`, 'sub Titulo' AS 'subTitle', 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>" +
+        cant +
+        ") AND (`subcategoria`.`id_subcat` = " +
+        subcat +
+        "))",
+      function (error: any, results: any, fields: any) {
+        if (error) {
+          console.log(error);
+          res.json({ error: true });
+          return;
+        }
+        // console.log("enviando respuesta" +results);
+        res.json({ error: false, results });
+      }
+    );
+  }
 
-}
-
-/*
+  /*
   public async lista(req: Request, res: Response): Promise<void> {
     try {
       await pool.query("SELECT * FROM stock", (err: any, stock: any, fields: any) => {

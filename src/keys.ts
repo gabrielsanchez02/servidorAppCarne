@@ -1,4 +1,4 @@
-export default{
+/*export default{
     database:{
         host: 'vps-1869856-x.dattaweb.com',
         user: 'root',
@@ -6,18 +6,17 @@ export default{
         database: 'appcarne_app',
        // port: 3306
     }
-}
+}*/
 
-/*export default {
+export default {
   database: {
     host: "127.0.0.1",
     user: "root",
-    password: "root",
-    database: "sender_bd",
-
+    password: "",
+    database: "appcarne_app",
     //port: 3306
   },
-};*/
+};
 
 /*export default{
     database:{
