@@ -179,9 +179,8 @@ class authController {
             const token = req.headers["x-access-token"];
             console.log({ token });
             if (!token) {
-                res
-                    .status(404)
-                    .json({
+                console.log("No ha provisto un token");
+                res.status(404).json({
                     error: {
                         name: "",
                         message: "No ha provisto un token",
@@ -199,27 +198,30 @@ class authController {
                     return token;
                 }
             });
-            console.log("entro a decode");
+            //console.log("entro a decode");
             // var decode1 = jwt.verify(token, config.secretoS);
             console.log({ decode });
             //decode = decode1;
             database.then(function (connection) {
-                var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
-                //console.log(decode.id + " " + sql1);
-                connection.query(sql1, function (error, usuario) {
-                    if (error) {
-                        console.log(error);
-                        res
-                            .status(404)
-                            .json({ error: true, mensaje: "Usuario no encontrado" });
-                        return;
-                    }
-                    else {
-                        console.log(usuario);
-                        console.log("error: " + error);
-                        res.json({ error, usuario });
-                    }
-                });
+                // console.log("variable decode id: "+decode.id);
+                if (decode.id != undefined) {
+                    var sql1 = "SELECT * FROM `users` WHERE id =" + decode.id;
+                    //console.log(decode.id + " " + sql1);
+                    connection.query(sql1, function (error, usuario) {
+                        if (error) {
+                            console.log(error);
+                            res
+                                .status(404)
+                                .json({ error: true, mensaje: "Usuario no encontrado" });
+                            return;
+                        }
+                        else {
+                            //console.log(usuario);
+                            console.log("error: " + error);
+                            res.json({ error, usuario });
+                        }
+                    });
+                }
             });
         });
     }
