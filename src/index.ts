@@ -16,11 +16,11 @@ class Server {
     this.routes();
   }
   config(): void {
-    this.app.set("port", process.env.port || 4306);
+    this.app.set("port", process.env.port || 3500);
     this.app.use(morgan("dev")); // morgan sirve para monitorear el server GET PUT POST etc
     this.app.use(cors());
     this.app.use(express.json()); // puede entender json y convertir a obj js
-    this.app.use(express.urlencoded({ extended: false })); //acepta enviar desde formulario html
+    this.app.use(express.urlencoded({ extended: false })); //acepta enviar desde formulario html3
   }
   routes(): void {
     this.app.use("/", indexRoutes);
