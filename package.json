@@ -1,7 +1,6 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "apollo-server-express": "^2.14.3",
@@ -30,7 +29,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "typescript": "^4.0.5"
   },
   "scripts": {
     "build": "tsc -w",
@@ -38,5 +38,13 @@
     "prod": "forever start build/index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabrielsanchez02/servidorAppCarne"
+  },
+  "bugs": {
+    "url": "https://github.com/gabrielsanchez02/servidorAppCarne/issues"
+  },
+  "homepage": "https://github.com/gabrielsanchez02/servidorAppCarne"
 }
