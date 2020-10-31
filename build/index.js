@@ -20,7 +20,8 @@ class Server {
     }
     config() {
         this.app.set("port", process.env.port || 3500);
-        this.app.use(morgan_1.default("dev")); // morgan sirve para monitorear el server GET PUT POST etc
+        this.app.use(morgan_1.default("dev"));
+        // morgan sirve para monitorear el server GET PUT POST etc
         this.app.use(cors_1.default());
         this.app.use(express_1.default.json()); // puede entender json y convertir a obj js
         this.app.use(express_1.default.urlencoded({ extended: false })); //acepta enviar desde formulario html3
