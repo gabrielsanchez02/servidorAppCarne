@@ -14,7 +14,7 @@ export default {
     user: "appcarne",
     password: "D*4eF3o4hW",
     database: "appcarne_app",
-    //port: 3306
+    // port: 4306
   },
 };
 
