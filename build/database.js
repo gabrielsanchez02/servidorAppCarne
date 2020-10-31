@@ -91,7 +91,7 @@ connection.getConnection((err, connection) => {
     }
     else {
         connection.release();
-        console.log(" Base de datos: " + keys_1.default.database.database + " is connected ");
+        console.log("Base de datos: " + keys_1.default.database.database + " is connected ");
     }
 });
 exports.default = connection;

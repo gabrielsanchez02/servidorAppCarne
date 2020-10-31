@@ -12,8 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     database: {
         host: "127.0.0.1",
-        user: "appcarne",
-        password: "D*4eF3o4hW",
+        /*user: "appcarne",
+        password: "D*4eF3o4hW",*/
+        //asi funciona en vps 
+        user: "root",
+        password: "",
         database: "appcarne_app",
     },
 };
