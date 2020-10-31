@@ -16,7 +16,7 @@ class Server {
     this.routes();
   }
   config(): void {
-    this.app.set("port", process.env.port || 8000);
+    this.app.set("port", process.env.port);
     this.app.use(morgan("dev"));// morgan sirve para monitorear el server GET PUT POST etc
     this.app.use(cors());
     this.app.use(express.json()); // puede entender json y convertir a obj js
