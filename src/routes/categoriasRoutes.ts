@@ -12,6 +12,7 @@ class categoriasRoutes {
 
     config() : void {
         this.router.get('/', categoriascontroller.listado);
+    
         
         //this.router.get('/:id', categoriascontroller.getOne);
         //this.router.post('/', categoriascontroller.create);       
