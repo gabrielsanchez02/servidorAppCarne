@@ -88,7 +88,7 @@ connection.getConnection((err, connection) => {
     return;
   } else {
     connection.release();
-    console.log(" Base de datos: " + keys.database.database + " is connected ");
+    console.log("Base de datos: " + keys.database.database + " is connected ");
   }
 });
 
