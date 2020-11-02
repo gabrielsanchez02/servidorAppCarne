@@ -36,6 +36,7 @@ class stockController {
         ") AND (`subcategoria`.`id_subcat` = " +
         subcat +
         "))",
+        
       function (error: any, results: any, fields: any) {
         if (error) {
           console.log(error);
