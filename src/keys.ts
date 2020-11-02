@@ -2,6 +2,7 @@
     database:{
         host: 'vps-1869856-x.dattaweb.com',
         user: 'root',
+        
         password: 'bfCzAW3UFwYv',
         database: 'appcarne_app',
        // port: 3306
