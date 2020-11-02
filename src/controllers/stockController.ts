@@ -31,7 +31,7 @@ class stockController {
     //console.log("entro a stock listado desp database");
     //SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'https://www.produccionsrl.com/wp-content/uploads/2018/11/25-500-Cerdo-Punta-de-espalda1.jpg' AS `imagen`, 'sub Titulo' AS "subTitle", 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>"+ cant +") AND (`subcategoria`.`id_subcat` = "+ subcat +"));
     connection.query(
-      "SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'http://www.donpollo.cl/wp-content/uploads/2018/01/costillar-centro.4.png' AS `image`, 'sub Titulo' AS 'subTitle', 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>" +
+      "SELECT stock.idprod AS id, '2020-07-28T21:07:57.217Z' AS `createdAt`, stock.nombre AS title, stock.valor_referencia AS price, subcategoria.nombre AS category, 'http://sd-1869856-h00001.ferozo.net/img/productos/costeletas.png' AS `image`, 'sub Titulo' AS 'subTitle', 'descripcion' AS 'description' FROM (subcategoria INNER JOIN stock ON subcategoria.id_subcat = stock.subcategoria) INNER JOIN categoria ON subcategoria.id_categoria = categoria.id_cat WHERE (((stock.unidades)>" +
         cant +
         ") AND (`subcategoria`.`id_subcat` = " +
         subcat +
