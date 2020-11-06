@@ -1,6 +1,9 @@
 import express, { Router } from 'express';
 
 import authController from '../controllers/authController';
+import JWTvalidador from '../middlewares/JWTvalidador';
+import UserValidador from '../middlewares/UserValidador';
+import getServiciosUser from '../middlewares/UserValidador';
 
 class authRoutes {
 
@@ -12,8 +15,9 @@ class authRoutes {
 
     config() {
         this.router.post('/registrarse', authController.registrarse);
-        this.router.post('/ingresar', authController.ingresar);
-        this.router.get('/perfil', authController.perfil);
+        this.router.post('/ingresar',[UserValidador.userisRegistrado], authController.ingresar);
+        this.router.get('/perfil',[JWTvalidador.jwtVerify,UserValidador.getServiciosUser],  authController.perfil);
+      //  this.router.get('/servicios', authController.getServiciosUser);
         
        /* this.router.get('/:id', stockController.getOne);
         this.router.post('/', stockController.create);
